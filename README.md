@@ -7,7 +7,7 @@
 **SimpleNotes** is a simple Bash application that allows users to create and manage text notes. The script creates a unique note file with a timestamp, allowing you to quickly save ideas, reminders, or lists without the need for complex graphical interfaces.
 
 ### Author
-**Creator:** w
+**Creator:** w-dev255
 
 ### Date of Creation
 Last modified: **15 November 2025**
