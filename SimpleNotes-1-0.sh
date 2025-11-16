@@ -18,7 +18,7 @@ else
 fi
 
 
-echo -e "Software made by $creator\n\nOfficial repository/nhttps://github.com/w-dev255/SimpleNotes\n\n$creator official contact\nhttps://smp11.simplex.im/a#J-PywsW697ASOGkg0rafoC0kM5-0ch7QvIpOii2XEqg"
+echo -e "Software made by $creator\n\nOfficial repository/nhttps://github.com/w-dev255/SimpleNotes\n$creator official contact\nhttps://smp11.simplex.im/a#J-PywsW697ASOGkg0rafoC0kM5-0ch7QvIpOii2XEqg"
 echo -e "\n$code_name : Writing a note... "
 while true; do
 read -r -p "note: " str
