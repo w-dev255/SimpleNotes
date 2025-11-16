@@ -16,7 +16,7 @@ if [[ -e "$notes" ]]; then
 else
         echo "$code_name : notes not exists."
         echo "$code_name : Generation in progress..."
-	mkdir -p notes
+	    mkdir -p notes
 fi
 
 while true; do 
