@@ -1,74 +1,45 @@
-## README — SimpleNotes (script: note.sh)
+## SimpleNotes README
 
-Short description
-- Small Bash script to write, list and attempt to manage plain-text notes in a directory named `notes`.
-- Author: w-dev255
-- Script filename: `note.sh`
+### Overview
+SimpleNotes is a small Bash script for quickly creating and managing timestamped text notes in a local `notes/` directory.
 
-Prerequisites
-- Unix-like system with Bash.
-- Permission to create files/directories in the working directory or the user’s home.
+### Features
+- Creates a `notes/` directory if it doesn't exist.
+- Creates timestamped note files named `note_YYYY-MM-DD-HH_MM_SS.txt`.
+- Lists existing notes before creating a new one.
+- Basic interactive commands supported while entering a note:
+  - `quit`, `exit`, `q` — exit the script
+  - `help` — show a short help prompt
+  - `rename` — (intended) rename a note
+  - `Delete a note` — (intended) delete a note
 
-Install and run
-1. Save the script as `note.sh`.
+### Requirements
+- Unix-like environment with Bash.
+- Standard utilities: date, mkdir, ls, realpath, mv, rm, touch.
+
+### Installation
+1. Save the script to a file, e.g. `note`.
 2. Make it executable:
    ```
-   chmod +x note.sh
+   chmod +x note
    ```
-3. Run:
+3. Run it:
    ```
-   ./note.sh
+   ./note
    ```
 
-What the script actually does
-- Sets main variables:
-  - creator="w-dev255"
-  - code_name="note"
-  - date formatted as YYYY-MM-DD-HH_MM_SS
-  - note_name="note_$date.txt"
-- Attempts to get an absolute path for `notes` with `notes=$(realpath notes)`.
-- Attempts to list files in `notes` into `note_list` using:
-  - `note_list=$(cd "$notes" && ls || echo "There are no notes available to display.")`
-- If the `notes` directory does not exist, prints messages and creates it with `mkdir -p notes`.
-- Enters a loop that:
-  - Clears the screen and prints author, repository and contact info (the script contains formatting typos like `Official repository/n...`).
-  - Shows the current `note_list`.
-  - Prompts the user for the note text (`note:`) and repeats until a non-empty string is entered.
-- After receiving non-empty input, the script evaluates the input:
-  - `quit`, `exit`, `q` → prints a message and exits without saving.
-  - `rename` → enters a rename routine that prompts for old and new names (implementation contains logic errors: nested infinite loops and incorrect command chaining).
-  - `Delete a note` → enters a delete routine that prompts for the filename to delete (implementation contains logic errors: invalid `cd /~`, possible infinite loop and incorrect chaining).
-  - Any other non-empty input → attempts to change directory (home then notes), create the timestamped file, write the input using `echo "$str" > "$note_name"`, and print a success message.
+### Usage
+- Run the script; it will ensure a `notes/` directory exists, then prompt for a note body.
+- Enter the note text and press Enter to save it into a timestamped file inside `notes/`.
+- Use the simple commands (`help`, `rename`, `Delete a note`, `quit`, `exit`, `q`) at the prompt — note: some commands are partially implemented and may not behave as expected.
 
-Limitations and known issues (actual behavior)
-- `realpath notes` may fail if `notes` does not exist at script start.
-- `note_list` is computed before ensuring the `notes` directory exists.
-- Inconsistent path usage: the script mixes `realpath notes`, `cd ~/"$notes"` and `cd "$notes"` incorrectly.
-- Many commands are chained with `&&` and `||` without clear precedence, causing later commands to run even when earlier ones fail.
-- Rename routine:
-  - Contains nested infinite `while` loops that do not exit properly.
-  - Uses `cd ~/"$notes"` (likely incorrect).
-  - `mv` may run even if `cd` failed.
-  - Success message references an undefined variable `$file_name`.
-- Delete routine:
-  - Uses invalid `cd /~` and flawed chaining.
-  - Can be trapped in a loop that doesn't terminate after delete attempts.
-- Saving notes:
-  - The script does not reliably ensure the current directory is `notes`; the created file may end up in the home or invocation directory.
-  - Timestamp filenames have only second precision; running multiple times in the same second can overwrite.
-  - Uses `>` to write the note (overwrite), though timestamped filenames normally prevent collisions.
-- No validation or escaping for filenames entered during rename/delete — spaces and special characters can break operations.
-- Minimal error handling for `realpath`, `mkdir`, `mv`, `rm`, `touch`, etc.
-- Several user-facing strings contain typos and formatting issues.
+### Behavior and file locations
+- Notes directory: `./notes` (script creates it relative to where it runs).
+- New notes: `notes/note_YYYY-MM-DD-HH_MM_SS.txt`.
+- Existing notes are listed before creating a new note.
 
-Typical flow
-1. Script attempts to resolve `notes` and list files.
-2. If `notes` is missing, it creates the directory.
-3. Prompts the user until a non-empty note is entered.
-4. If the user enters `quit`/`exit`/`q`, the script exits.
-5. If the user enters `rename` or `Delete a note`, the script enters the respective routine — these are likely to fail or hang due to bugs.
-6. For any other string, the script attempts to create a timestamped file and write the note — but the save location is not guaranteed.
-
-Repository and contact
+### License and contact
+- Creator: w-dev255
 - Repository: https://github.com/w-dev255/SimpleNotes
-- Contact: SimpleX Chat link shown by the script.
+- Contact: https://smp11.simplex.im/a#J-PywsW697ASOGkg0rafoC0kM5-0ch7QvIpOii2XEqg
+
