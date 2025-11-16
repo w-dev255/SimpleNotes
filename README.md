@@ -1,89 +1,53 @@
-## Simple Notes — README
+## README — SimpleNotes (script: note.sh)
 
-**Author:** w-dev255  
-**Script name:** Simple-Notes-1-0.sh  
-**Official repository:** https://github.com/w-dev255/SimpleNotes
+Short description
+- Simple Bash script to create plain-text notes in a directory named `notes`.
+- Author: w-dev255
+- Script filename: `note.sh`
 
-Short description  
-Minimal Bash script to quickly create a timestamped text note in a "notes" directory. Includes basic commands for quitting and an attempted (but buggy) rename feature.
-
-Requirements
+Prerequisites
 - Unix-like system with Bash.
-- Commands used: bash, date, mkdir, realpath, touch, mv, cd, echo, read.
+- Write permission in the user's home or current working directory.
 
 Installation
-1. Download Simple-Notes-1-0.sh into the desired folder.
+1. Save the script as `note.sh`.
 2. Make it executable:
-```
-chmod +x Simple-Notes-1-0.sh
-```
+   ```
+   chmod +x note.sh
+   ```
 3. Run:
-```
-./Simple-Notes-1-0.sh
-```
+   ```
+   ./note.sh
+   ```
 
-How it works
-- Variables set at start:
-  - creator="w-dev255"
-  - code_name="note"
-  - date = current timestamp YYYY-MM-DD-HH_MM_SS
-  - note_name = "note_$date.txt"
-  - notes = realpath notes
-- If "notes" directory does not exist, the script creates it (mkdir -p notes).
-- Displays author, repo and contact info.
-- Prompts the user for a single-line note (prompt: note: ). Empty input is rejected.
-- Special first inputs:
-  - "quit", "exit", "q" — script exits.
-  - "rename" — enters a rename flow (currently implemented with logical errors; see Known issues).
-- For a normal note string, the script writes the string to a timestamped file inside the notes directory (overwrites if the same name exists) and prints the saved filename and path.
+Actual behavior of the code
+- On startup it runs `realpath notes` to get an absolute path for `notes`.
+- If `notes` does not exist, it attempts to create it with `mkdir -p notes`.
+- It builds a note filename using the current date/time: `note_YYYY-MM-DD-HH_MM_SS.txt`.
+- It lists files in the `notes` directory (or prints "There are no notes available to display.").
+- Prints author info, repository link and contact info.
+- Main input loop:
+  - Prompts the user for the note text (`note:`). If the input is empty it repeats the prompt.
+  - Special commands recognized: `quit`, `exit`, `q` — exit the script without saving.
+  - `rename` enters a file rename routine (see Problems section — the implementation is flawed).
+  - Any other non-empty input is saved as the note: the script creates the timestamped file and writes the input into it (using `>` which overwrites), then exits.
 
-Example
-1. Run:
-   ./Simple-Notes-1-0.sh
-2. At prompt:
-   note: This is a quick note
-3. Result: notes/note_2025-11-16-12_34_56.txt containing the provided text.
+Usage
+- To create a note: type the desired text when prompted; a file named with a timestamp will be created in `notes/`.
+- To exit without saving: type `quit`, `exit`, or `q`.
+- To rename files: type `rename` (see limitations).
 
-Technical notes
-- note_name is created once at startup; each run produces a unique filename based on the start timestamp.
-- realpath notes is used to resolve an absolute path; if the directory doesn't exist realpath may fail. The script then creates the directory but the notes variable may not hold the expected value.
-- The note content is written with:
-```
-echo "$str" > "$note_name"
-```
-(single-line write, overwrite mode).
-- The rename flow attempts to use mv inside ~/notes.
+Limitations and known issues (actual behavior)
+- `realpath notes` may fail if `notes` does not exist yet.
+- Inconsistent use of `cd` and chained `&&`/`||` leads to commands running even when earlier steps fail.
+- The `rename` routine contains nested infinite loops and does not properly exit.
+- The script sometimes fails to change into the `notes` directory before touching/writing the note, so the file may be created in the current directory or home directory instead of `notes/`.
+- Using a timestamp with second precision can lead to collisions if run multiple times in the same second.
+- Note contents are written with `>` (overwrite) instead of `>>` (append) — but the timestamped filename should usually prevent overwriting.
+- No validation or escaping of filenames or user input (spaces or special characters can break operations).
+- Error handling is minimal for `realpath`, `mkdir`, `mv`, `touch`, and `echo`.
+- Some informational messages contain formatting/typo issues.
 
-Known issues and limitations
-- realpath notes is called before ensuring the directory exists; this can error and leave notes unset or incorrect.
-- Rename implementation contains nested infinite loops (while true) and will not behave correctly. It also reads str2 in a loop without proper exit and uses an undefined variable ($file_name) in its final message.
-- cd and touch are combined with incorrect operator precedence:
-```
-cd ~/"$notes" || echo "..." && touch "$note_name"
-```
-causing touch to run even if cd failed, and producing wrong paths.
-- Input is single-line only; no support for multiline notes or editor invocation.
-- No sanitization of filenames for rename (security risk).
-- Potential double-path issues (using realpath then cd ~/"$notes").
-
-Suggested improvements (recommended fixes)
-- Set notes after creating the directory:
-```
-mkdir -p notes
-notes="$(realpath notes)"
-```
-- Fix rename flow: remove nested infinite loops, validate inputs, cd to "$notes" (not ~/notes), use correct variables in messages.
-- Separate and check cd and touch steps:
-```
-cd "$notes" || { echo "$code_name : cd failed"; exit 1; }
-touch "$note_name"
-```
-- Offer append mode (>>), multiline input (open $EDITOR), and CLI options (--help, --name, --append).
-- Properly quote variables and sanitize filenames.
-
-License
-Add an explicit license file (recommended: MIT). Example header:
-```
-Copyright (c) 2025 w-dev255
-Licensed under the MIT License — see LICENSE file.
-```
+Repository and contact
+- Official repository: https://github.com/w-dev255/SimpleNotes
+- Author contact: link displayed by the script.
