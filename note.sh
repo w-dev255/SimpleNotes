@@ -76,6 +76,7 @@ while true; do
 			else 
 				echo "$code_name : I see you've written something, let me read."
 				cd /~ || echo "$code_name : An unexpected error occurred." && cd "$notes" || echo "$code_name : An unexpected error occurred." && rm -f "$del" || echo "$code_name : An unexpected error occurred." && echo "$code_name : $del was successfully cancelled."
+		        break
 			fi
 		done
 	else
