@@ -18,7 +18,7 @@ else
 fi
 
 
-echo "Software made by $creator"
+echo -e "Software made by $creator\nhttps://github.com/w-dev255/SimpleNotes"
 echo -e "\n$code_name : Writing a note... "
 while true; do
 read -r -p "note: " str
