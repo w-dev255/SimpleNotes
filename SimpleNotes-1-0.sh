@@ -1,5 +1,5 @@
 #!/bin/bash
-creator="w"
+creator="w-dev255"
 
 code_name="note"
 
