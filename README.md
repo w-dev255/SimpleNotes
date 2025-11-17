@@ -21,7 +21,7 @@ SimpleNotes is a small Bash script for quickly creating and managing timestamped
 1. Save the script to a file, e.g. `note`.
 2. Make it executable:
    ```
-   chmod +x note
+   chmod +x note-beta-0-1.sh
    ```
 3. Run it:
    ```
