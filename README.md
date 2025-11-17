@@ -31,7 +31,7 @@ SimpleNotes is a small Bash script for quickly creating and managing timestamped
 ### Usage
 - Run the script; it will ensure a `notes/` directory exists, then prompt for a note body.
 - Enter the note text and press Enter to save it into a timestamped file inside `notes/`.
-- Use the simple commands (`help`, `rename`, `Delete a note`, `quit`, `exit`, `q`) at the prompt — note: some commands are partially implemented and may not behave as expected.
+- Use the simple commands (`help`, `rename`, `Delete`, `quit`, `exit`, `q`) at the prompt — note: some commands are partially implemented and may not behave as expected.
 
 ### Behavior and file locations
 - Notes directory: `./notes` (script creates it relative to where it runs).
