@@ -11,7 +11,7 @@ SimpleNotes is a small Bash script for quickly creating and managing timestamped
   - `quit`, `exit`, `q` — exit the script
   - `help` — show a short help prompt
   - `rename` — (intended) rename a note
-  - `Delete a note` — (intended) delete a note
+  - `Delete` — (intended) delete a note
 
 ### Requirements
 - Unix-like environment with Bash.
