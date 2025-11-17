@@ -25,7 +25,7 @@ SimpleNotes is a small Bash script for quickly creating and managing timestamped
    ```
 3. Run it:
    ```
-   ./note
+   ./note-beta-0-1.sh
    ```
 
 ### Usage
