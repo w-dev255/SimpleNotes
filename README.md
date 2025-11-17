@@ -18,7 +18,7 @@ SimpleNotes is a small Bash script for quickly creating and managing timestamped
 - Standard utilities: date, mkdir, ls, realpath, mv, rm, touch.
 
 ### Installation
-1. Save the script to a file, e.g. `note`.
+1. Save the script to a file, e.g. `note-beta-0-1.sh`.
 2. Make it executable:
    ```
    chmod +x note-beta-0-1.sh
